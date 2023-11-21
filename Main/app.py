@@ -14,6 +14,7 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     msg = ''
+    msg_reg = ''
     if request.method == 'POST':
         # create variables for easy access
         username = request.form['email_id']
@@ -56,7 +57,7 @@ def register():
             session ['loggedin'] = True
             session ['username'] = username
 
-            return redirect(url_for('login'))
+            return render_template('login.html', msg_reg=msg)
     
     return render_template('register.html', msg=msg)
     
@@ -185,5 +186,4 @@ if __name__ == '__main__':
     app.run(port=8000, debug=True)
 
 
-# con.close()
 session.clear()

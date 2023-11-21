@@ -1,7 +1,7 @@
 import pandas as pd
 import re
 
-df = pd.read_csv('../RecipeRec/recipes.csv')
+df = pd.read_csv('../Dataset/recipes.csv')
 
 
 def getUniqueCuisine():

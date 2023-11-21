@@ -51,6 +51,7 @@
         <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
           <h2>Login<br></h2>
           <p></p>
+                {{ msg_reg }}
                 {% if msg %}
                     <p class="error"><strong>Error:</strong> {{ msg }}</p>
                     <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
