@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <style>
+      /* Add custom CSS for the table */
+      .subtle-button {
+    display: inline-block;
+    padding: 3px 5px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #101010;
+    background-color: #c6c6c6;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect */
+.subtle-button:hover {
+    background-color: #e0e0e0;
+}
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px;
+      }
+
+      th, td {
+          padding: 12px 15px;
+          text-align: left;
+      }
+
+      th {
+          background-color: #f2f2f2;
+      }
+
+      tr:nth-child(even) {
+          background-color: #f5f5f5;
+      }
+
+      tr:hover {
+          background-color: #dcdcdc;
+      }
+  </style>
+
+        <title>Home Page</title>
+        {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      
+        <title>Yummy Bootstrap Template - Index</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+              
+        <link href="{{ url_for('static', filename='/images/apple-touch-icon.png') }}" rel="apple-touch-icon">
+      
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Amatic+SC:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+      
+        <!-- Vendor CSS Files -->
+        
+        <link href="{{ url_for('static', filename='/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+      
+        <!-- Template Main CSS File -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='/css/main.css') }}">
+      
+        {% endblock head %}
+      </head>
+<body>
+      <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <a href="{{url_for('home')}}" class="logo d-flex align-items-center me-auto me-lg-0">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1>Recipe Recommender<span>.</span></h1>
+      </a>
+
+      <div style="text-align: right;">
+        <a href="{{ url_for('recipe_recommender')}}"><u>Recipe Recommender</u></a>
+        <span style="margin-right: 15px;"></span>
+        <a href="{{ url_for('bookmarks')}}"><u>Bookmarks</u></a>
+        <span style="margin-right: 15px;"></span>
+        <a href="{{ url_for('my_profile')}}"><u>My Profile</u></a>
+      </div>
+      
+    </div>
+  </header><!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="hero d-flex align-items-center section-bg">
+        <div class="container">
+          <div class="row justify-content-between gy-5">
+            <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+              <h2>Enjoy Your Healthy<br>Delicious Food</h2>
+            </div>
+            <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
+                <!-- {{ url_for('static', filename='/images/apple-touch-icon.png') }} -->
+              <img src="{{ url_for('static', filename='/images/menu/menu-item-1.png') }}" class="img-fluid" alt="ok">
+            </div>
+          </div>
+        </div>
+      </section><!-- End Hero Section -->
+    
+
+      <main id="main">
+
+        <!-- ======= About Section ======= -->
+        <section id="about" class="section-header">
+          <div class="container">
+            <form method="POST">
+                {% if checked %}
+                <label class="switch">
+                  <input type="checkbox" name="allergenToggle" checked>
+                  <span class="slider"></span>Exclude Allergen
+                </label>
+                {% else %}
+                <label class="switch">
+                  <input type="checkbox" name="allergenToggle">
+                  <span class="slider"></span>Exclude Allergen
+                </label>
+                {% endif %}
+
+              <button type="submit" name="submit" class="subtle-button">Search</button>
+            </form>
+            <br>
+            <br>
+            <table>
+              
+              <tr>
+                <th>Name</th>
+                <th>Time (mins)</th>
+                <th>Cuisine</th>
+                <th>Ingredients</th>
+                <th></th>
+              </tr>
+              {% for recipe in recipes %}
+              <tr>
+                <td>
+                  {{ recipe[1] }}
+                </td>
+                <td>
+                  {{ recipe[2] }}
+                </td>
+                <td>
+                  {{ recipe[3] }}
+                </td>
+                <td>
+                  {{ recipe[4] }}
+                </td>
+                <td>
+                  <form method="POST" action="{{ url_for('recipe_hidden') }}">
+                    <input type="hidden" name="rec_id" value="{{ recipe[0] }}">
+                    <button type="submit" name="submit" class="subtle-button">Lets make it!</button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+
+</body>
+</html>
